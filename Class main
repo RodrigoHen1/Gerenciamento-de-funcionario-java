@@ -1,0 +1,78 @@
+package genfuncionario;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class GerenciamentoFuncionarios {
+    private List<Funcionario> funcionarios;
+
+    public GerenciamentoFuncionarios() {
+        funcionarios = new ArrayList<>();
+    }
+
+    public void adicionarFuncionario(Funcionario funcionario) {
+        funcionarios.add(funcionario);
+    }
+
+    public void removerFuncionario(Funcionario funcionario) {
+        funcionarios.remove(funcionario);
+    }
+
+    public void listarFuncionarios() {
+        for (Funcionario funcionario : funcionarios) {
+            funcionario.exibirInformacoes();
+            System.out.println("--------------");
+        }
+    }
+
+    public static void main(String[] args) {
+        GerenciamentoFuncionarios gerenciador = new GerenciamentoFuncionarios();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1 - Adicionar Funcionário");
+            System.out.println("2 - Remover Funcionário");
+            System.out.println("3 - Listar Funcionários");
+            System.out.println("4 - Sair");
+            System.out.print("Escolha uma opção: ");
+
+            int opcao = scanner.nextInt();
+            scanner.nextLine(); // Limpar o buffer do scanner
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Digite o nome do funcionário: ");
+                    String nome = scanner.nextLine();
+                    System.out.print("Digite a idade do funcionário: ");
+                    int idade = scanner.nextInt();
+                    System.out.print("Digite o salário do funcionário: ");
+                    double salario = scanner.nextDouble();
+                    Funcionario novoFuncionario = new Funcionario(nome, idade, salario);
+                    gerenciador.adicionarFuncionario(novoFuncionario);
+                    System.out.println("Funcionário adicionado com sucesso!");
+                    break;
+                case 2:
+                    System.out.println("Listando funcionários:");
+                    gerenciador.listarFuncionarios();
+                    System.out.print("Digite o índice do funcionário a ser removido: ");
+                    int indice = scanner.nextInt();
+                    Funcionario funcionarioRemover = gerenciador.funcionarios.get(indice);
+                    gerenciador.removerFuncionario(funcionarioRemover);
+                    System.out.println("Funcionário removido com sucesso!");
+                    break;
+                case 3:
+                    System.out.println("Listando funcionários:");
+                    gerenciador.listarFuncionarios();
+                    break;
+                case 4:
+                    System.out.println("Saindo do sistema...");
+                    scanner.close();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        }
+    }
+}
